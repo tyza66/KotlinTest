@@ -1,0 +1,48 @@
+在Android开发中，MVVM（Model-View-ViewModel）是一种架构设计模式，它帮助开发人员更好地组织和管理代码，以提高代码的可维护性和可扩展性。MVVM模式将应用程序分成三个主要部分：
+
+Model（模型）：负责处理应用程序的数据和业务逻辑。Model通常包含数据对象、数据库交互、网络请求等逻辑。
+
+View（视图）：负责显示UI和用户交互。View通常是Activity、Fragment或自定义View，它们通过观察ViewModel中的数据来更新UI。
+
+ViewModel（视图模型）：负责在Model和View之间进行协调。ViewModel持有Model中的数据，并将其转换为View可以显示的格式。同时，它还处理用户交互并更新Model中的数据。
+
+以下是一个简单的示例，展示了如何在Android应用中使用MVVM模式：
+
+kotlin
+// Model
+data class User(val name: String, val age: Int)
+
+// ViewModel
+class UserViewModel : ViewModel() {
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User> get() = _user
+
+    fun updateUser(name: String, age: Int) {
+        _user.value = User(name, age)
+    }
+}
+
+// View (Activity)
+class MainActivity : AppCompatActivity() {
+    private lateinit var viewModel: UserViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+        // Observe the user data
+        viewModel.user.observe(this, Observer { user ->
+            // Update the UI
+            findViewById<TextView>(R.id.userName).text = user.name
+            findViewById<TextView>(R.id.userAge).text = user.age.toString()
+        })
+
+        // Simulate user interaction
+        findViewById<Button>(R.id.updateButton).setOnClickListener {
+            viewModel.updateUser("Alice", 25)
+        }
+    }
+}
+在这个示例中，User类是Model，UserViewModel类是ViewModel，而MainActivity类是View。View通过观察ViewModel中的数据来更新UI，当用户点击按钮时，ViewModel会更新Model中的数据，并触发UI更新。
