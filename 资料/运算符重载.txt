@@ -1,0 +1,46 @@
+在 Kotlin 中，自定义运算符重载（Operator Overloading）是一项非常强大的功能，你可以通过定义特定的函数来重载运算符。下面是一些常见运算符重载的示例。
+
+首先，确保你的类中定义了相应的函数，并且使用 operator 关键字。例如，如果你想重载加法运算符（+），你需要定义一个 plus 函数：
+
+kotlin
+data class Point(val x: Int, val y: Int) {
+    operator fun plus(other: Point): Point {
+        return Point(x + other.x, y + other.y)
+    }
+}
+
+fun main() {
+    val point1 = Point(1, 2)
+    val point2 = Point(3, 4)
+    val result = point1 + point2
+    println(result)  // 输出：Point(x=4, y=6)
+}
+在这个示例中，我们定义了一个 Point 类，并重载了加法运算符 +。当我们使用 point1 + point2 时，实际上调用的是 plus 函数。
+
+其他常见的运算符重载方法包括：
+
+minus：用于重载减法运算符 -
+
+times：用于重载乘法运算符 *
+
+div：用于重载除法运算符 /
+
+mod：用于重载取模运算符 %
+
+unaryMinus：用于重载一元负号运算符 -
+
+例如，重载减法运算符 - 可以这样定义：
+
+kotlin
+data class Point(val x: Int, val y: Int) {
+    operator fun minus(other: Point): Point {
+        return Point(x - other.x, y - other.y)
+    }
+}
+
+fun main() {
+    val point1 = Point(5, 7)
+    val point2 = Point(2, 3)
+    val result = point1 - point2
+    println(result)  // 输出：Point(x=3, y=4)
+}
