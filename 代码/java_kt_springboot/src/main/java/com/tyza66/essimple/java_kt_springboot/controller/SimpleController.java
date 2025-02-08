@@ -1,4 +1,5 @@
 package com.tyza66.essimple.java_kt_springboot.controller;
+import com.tyza66.essimple.java_kt_springboot.model.KotlinStudent;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,6 +9,7 @@ public class SimpleController {
 
     @RequestMapping("/java")
     String test(){
-        return "java";
+        KotlinStudent s = new KotlinStudent("java");
+        return s.getName();
     }
 }

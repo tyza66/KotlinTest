@@ -67,7 +67,6 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.tyza66.essimple.java_kt_springboot.JavaKtSpringbootApplication</mainClass>
-                    <skip>true</skip>
                 </configuration>
                 <executions>
                     <execution>

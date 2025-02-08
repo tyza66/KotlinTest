@@ -1,5 +1,6 @@
 package com.tyza66.essimple.java_kt_springboot.controller
 
+import com.tyza66.essimple.java_kt_springboot.model.JavaStudent
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 class KtController {
     @RequestMapping("/kotlin")
     fun test(): String {
-        return "kotlin"
+        var s = JavaStudent("kotlin")
+        return s.name
     }
 }
