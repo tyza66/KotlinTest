@@ -9,10 +9,29 @@ fun main() {
     test2(::test) // 这样也可以 因为应用对象 表示的是函数本身的定义
 
     val kf = A111::fn
-    val a1 = A111(1)
+    val a1 = A111(1)   // 在类里面的应用调用需要传递上下文
     kf(a1) // 这样也可以调用
 
     test3(kf)
+
+    // 类中的函数我们一般不像上面那么用 实际上都是用来看信息的
+
+    println(kf.isOpen)
+
+    val inA = A111::a1
+    println(inA.isConst)
+
+    val Aself =  ::A111 // 拿到的其实是构造函数
+    println(Aself(1).a1)
+    println(Aself.isAbstract)
+
+    println(inA.get(A111(2))) // 类内部的东西都要传上下文
+
+    val kClass = A111::class // 这个KClass类具备一些kt的特征
+    println(kClass.simpleName)
+
+    val java = A111::class.java // 这个是为了兼容java生态的
+    println(java.simpleName)
 }
 
 fun test() {
