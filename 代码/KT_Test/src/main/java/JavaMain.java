@@ -4,5 +4,6 @@ public class JavaMain{
          f.sout();
         System.out.println(f.Acc.getA());
         System.out.println(F.c);
+        H.INSTANCE.sout();
     }
 }

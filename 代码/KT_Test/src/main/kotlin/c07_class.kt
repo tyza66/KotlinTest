@@ -37,6 +37,15 @@ fun main() {
     println(TestEnum2.A.key) // 枚举类的成员变量 key是咱们新增的
     println(TestEnum2.A.name) // 枚举类的名字 name是默认自带的
     println(TestEnum2.A.k2)
+
+    H.sout() // 单例的调用
+
+    request(object:I{   // 使用对象表达式创建 如果实现的是java接口 可以用object:接口名 甚至用lambda表达式
+        override fun sout1() {
+            println("giao")
+        }
+
+    })
 }
 
 class A1 constructor(b: Int = 1) { // 我们也可以用var在构造函数里面声明变量 // constructor是可以省略的 主构造函数
@@ -228,10 +237,79 @@ enum class TestEnum{
     A,B,C
 } // kt中可以把每一个枚举值看作一个继承了枚举类的对象
 
-enum class TestEnum2(val key:String,val k2:String){ // 既然是类就可以写成员
-    A("testA","1"),
-    B("testB","2"),
-    C("testC","3")
+enum class TestEnum2(val key:String,val k2:String="123"):G{ // 既然是类就可以写成员 并且可以实现接口
+    A("testA","1") {
+        override fun sout() {
+            TODO("Not yet implemented")
+        }
+    },
+    B("testB","2") {
+        override fun sout() {
+            TODO("Not yet implemented")
+        }
+    },
+    C("testC") {
+        override fun sout() {
+            TODO("Not yet implemented")
+        }
+    }
 }
 
+interface G{
+    fun sout()
+}
 
+// 可以将枚举可以理解为是一个类 类里面套了很多静态类
+// 然后枚举里面还可以写方法
+
+
+// 单例 单例也可以是继承的
+object H:I{ // 默认是饿汉模式 DANM
+
+    const val a:Int = 1 // 单例中也是可以写const的
+    fun sout(){
+        println("单例")
+    }
+
+    override fun sout1() {
+        TODO("Not yet implemented")
+    }
+}
+
+interface I{
+    fun sout1()
+}
+
+fun request(i:I){
+    i.sout1()
+}
+
+// 密封类
+sealed class sA{ // 密封类是抽象的  它本身也是可以继承别人的
+    abstract fun test()
+}
+
+class sB : sA() // 密封类的子类可以有多个
+{
+    override fun test() {
+        println("sB")
+    }
+}
+
+object sC : sA() // 密封类的子类可以有多个
+{
+    override fun test() {
+        println("sC ")
+    }
+}
+
+fun handler(a:sA){ // 当枚举用
+    when(a){
+        is sB -> a.test()
+        sC -> a.test()
+    }
+}
+
+// 密封类的子类可以写在里面进行归类 但是也要写继承
+
+// 接口也可以定义为密封接口 就是为了让类可以进行多继承 之后好is 分类
