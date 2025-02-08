@@ -21,7 +21,6 @@
 - C10: 双冒号
 - C11: By关键字委托
 - C12: 泛型
-- C13: DSL
 - C14: SpringBoot项目中实现混合开发(java_kt_springboot)
 
 By: tyza66
