@@ -1,0 +1,36 @@
+Kotlin中的热流（hot flow）可以在多线程中发挥作用。热流是一种在多个协程之间共享状态的流，它们的元素是由上游协程持续生成的，可以在多个下游协程之间共享。
+
+在Kotlin中，StateFlow和SharedFlow是两种常见的热流类型。StateFlow用来持有并共享状态，而SharedFlow用来广播事件。你可以在多线程环境中使用这些流来安全地处理并发操作。
+
+以下是一个使用StateFlow的简单示例：
+
+kotlin
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+
+val stateFlow = MutableStateFlow(0)
+
+fun main() = runBlocking {
+    val job1 = launch(Dispatchers.Default) {
+        stateFlow.collect { value ->
+            println("Collector 1: $value")
+        }
+    }
+    val job2 = launch(Dispatchers.Default) {
+        stateFlow.collect { value ->
+            println("Collector 2: $value")
+        }
+    }
+    delay(1000)
+    stateFlow.value = 1
+    delay(1000)
+    stateFlow.value = 2
+    delay(1000)
+    stateFlow.value = 3
+    job1.cancel()
+    job2.cancel()
+}
+在这个示例中，两个协程job1和job2在不同的线程中收集同一个stateFlow，并输出其值。每当stateFlow的值改变时，所有收集器都会收到通知。
+
+请确保你导入了kotlinx.coroutines库并在协程作用域内使用热流，以确保线程安全和高效的并发操作。
+
