@@ -29,6 +29,14 @@ fun main() {
     println(older_persion) // 打印的时候调用的是默认的toString
 
     F.Acc.sout() // 伴生类的调用
+
+    // 枚举类
+    println(TestEnum.A)
+
+    println(TestEnum2.A)
+    println(TestEnum2.A.key) // 枚举类的成员变量 key是咱们新增的
+    println(TestEnum2.A.name) // 枚举类的名字 name是默认自带的
+    println(TestEnum2.A.k2)
 }
 
 class A1 constructor(b: Int = 1) { // 我们也可以用var在构造函数里面声明变量 // constructor是可以省略的 主构造函数
@@ -215,4 +223,15 @@ class F{
         var c = 3;
     }
 }
+
+enum class TestEnum{
+    A,B,C
+} // kt中可以把每一个枚举值看作一个继承了枚举类的对象
+
+enum class TestEnum2(val key:String,val k2:String){ // 既然是类就可以写成员
+    A("testA","1"),
+    B("testB","2"),
+    C("testC","3")
+}
+
 
